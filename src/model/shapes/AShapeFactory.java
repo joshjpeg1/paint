@@ -1,4 +1,4 @@
-package shapes;
+package model.shapes;
 
 /**
  * Created by josh_jpeg on 10/10/17.
@@ -11,7 +11,13 @@ public class AShapeFactory {
     }
     switch (type) {
       case RECT:
-        return new Rectangle();
+        return new Rectangle(startX, startY, endX, endY);
+      case ELLIPSE:
+        return new Ellipse(startX, startY, endX, endY);
+      case LINE:
+        return new Line(startX, startY, endX, endY);
+      case CURVE:
+        return new Curve(startX, startY, endX, endY, 0);
       default:
         throw new IllegalArgumentException("Invalid ShapeType");
     }

@@ -1,4 +1,4 @@
-package shapes;
+package model.shapes;
 
 /**
  * Created by josh_jpeg on 10/10/17.
