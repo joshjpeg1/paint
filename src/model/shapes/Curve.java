@@ -1,15 +1,21 @@
 package model.shapes;
 
+import java.awt.*;
+
 /**
  * Created by josh_jpeg on 10/10/17.
  */
-public class Curve extends Line {
+public class Curve extends AShape {
+  private int width;
+  private int height;
   private int degree;
 
-  protected Curve(int startX, int startY, int endX, int endY, int degree) {
-    super(startX, startY, endX, endY);
+  protected Curve(int startX, int startY, int endX, int endY) {
+    super(Math.min(startX, endX), Math.min(startY, endY));
     this.type = ShapeType.CURVE;
-    this.degree = degree;
+    this.width = Math.abs(startX - endX);
+    this.height = Math.abs(startY - endY);
+    this.degree = 0;
   }
 
   @Override
@@ -22,18 +28,24 @@ public class Curve extends Line {
     Curve other = (Curve) o;
     return this.startX == other.startX
       && this.startY == other.startY
-      && this.endX == other.endX
-      && this.endY == other.endY
+      && this.width == other.width
+      && this.height == other.height
       && this.degree == other.degree;
   }
 
   @Override
   public String toString() {
-    return "[CURVE, (" + this.startX + ", " + this.startY + "), (" + this.endX + ", " + this.endY
-      + "), d: " + this.degree + "°]";
+    return "[CURVE, (" + this.startX + ", " + this.startY + "), " + this.width + ", " + this.height
+      + ", d: " + this.degree + "°]";
   }
 
   public static AShape getCopy(Curve other) {
-    return new Curve(other.startX, other.startY, other.endX, other.endY, other.degree);
+    return new Curve(other.startX, other.startY, other.startX + other.width,
+      other.startY + other.height);
+  }
+
+  @Override
+  public void paint(Graphics g) {
+    g.drawArc(startX, startY, width, height, 20, 20);
   }
 }

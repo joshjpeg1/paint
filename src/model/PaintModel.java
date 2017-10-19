@@ -2,8 +2,10 @@ package model;
 
 import model.shapes.AShape;
 import model.shapes.AShapeFactory;
+import model.shapes.LineThickness;
 import model.shapes.ShapeType;
 
+import java.awt.*;
 import java.util.Stack;
 
 /**
@@ -13,6 +15,10 @@ public class PaintModel {
   private Stack<AShape> shapes;
   private AShapeFactory factory;
   private static PaintModel model;
+  private Point tempStart = null;
+  private Point tempEnd = null;
+  private ShapeType shapeType = ShapeType.LINE;
+  private LineThickness lineThickness = LineThickness.ONE;
 
   private PaintModel() {
     this.shapes = new Stack<>();
@@ -39,6 +45,10 @@ public class PaintModel {
     for (int i = 0; i < shapes.size(); i++) {
       copy.add(AShape.getCopy(shapes.get(i)));
     }
+    if (this.tempStart != null && this.tempEnd != null) {
+      copy.add(this.factory.getShape(this.shapeType, this.tempStart.x, this.tempStart.y,
+        this.tempEnd.x, this.tempEnd.y));
+    }
     return copy;
   }
 
@@ -48,7 +58,22 @@ public class PaintModel {
     }
   }
 
+  public void startDraw(Point mouseStart) {
+    this.tempStart = mouseStart;
+    this.tempEnd = mouseStart;
+  }
+
+  public void updateEndPoint(Point mouseEnd) {
+    this.tempEnd = mouseEnd;
+  }
+
+  public void stopDraw(Point mouseEnd) {
+    this.addShape(this.shapeType, this.tempStart.x, this.tempStart.y, mouseEnd.x, mouseEnd.y);
+    this.tempStart = null;
+    this.tempEnd = null;
+  }
+
   public void clearCanvas() {
-    shapes.empty();
+    this.shapes.clear();
   }
 }

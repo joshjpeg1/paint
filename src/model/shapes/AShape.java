@@ -1,5 +1,7 @@
 package model.shapes;
 
+import java.awt.*;
+
 /**
  * Created by josh_jpeg on 10/10/17.
  */
@@ -33,21 +35,29 @@ public abstract class AShape {
     return this.startY;
   }
 
+  public ShapeType getType() {
+    return this.type;
+  }
+
   public static AShape getCopy(AShape other) {
     if (other == null) {
       throw new IllegalArgumentException("Cannot copy a null shape.");
     }
     switch (other.type) {
       case RECT:
-        Rectangle.getCopy((Rectangle) other);
+        return Rectangle.getCopy((Rectangle) other);
       case ELLIPSE:
-        Ellipse.getCopy((Ellipse) other);
+        return Ellipse.getCopy((Ellipse) other);
       case LINE:
-        Line.getCopy((Line) other);
+        return Line.getCopy((Line) other);
       case CURVE:
-        Curve.getCopy((Curve) other);
+        return Curve.getCopy((Curve) other);
       default:
         throw new IllegalArgumentException("Shape type does not exist.");
     }
+  }
+
+  public void paint(Graphics g) {
+    return;
   }
 }

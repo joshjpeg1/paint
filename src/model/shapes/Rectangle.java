@@ -1,5 +1,7 @@
 package model.shapes;
 
+import java.awt.*;
+
 /**
  * Created by josh_jpeg on 10/10/17.
  */
@@ -37,5 +39,10 @@ public class Rectangle extends AShape {
   public static AShape getCopy(Rectangle other) {
     return new Rectangle(other.startX, other.startY,
       other.startX + other.width, other.startY + other.height);
+  }
+
+  @Override
+  public void paint(Graphics g) {
+    g.fillRect(startX, startY, width, height);
   }
 }

@@ -1,5 +1,7 @@
 package model.shapes;
 
+import java.awt.*;
+
 /**
  * Created by josh_jpeg on 10/10/17.
  */
@@ -37,5 +39,10 @@ public class Ellipse extends AShape {
   public static AShape getCopy(Ellipse other) {
     return new Ellipse(other.startX, other.startY,
       other.startX + other.width, other.startY + other.height);
+  }
+
+  @Override
+  public void paint(Graphics g) {
+    g.drawOval(startX, startY, width, height);
   }
 }

@@ -4,6 +4,8 @@ import model.PaintModel;
 
 import javax.swing.JFrame;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 
 /**
  * Created by josh_jpeg on 10/14/17.
@@ -15,14 +17,15 @@ public class PaintView extends JFrame {
   private static Toolbar toolbar;
   private static Canvas canvas;
 
-  public PaintView(PaintModel model) throws IllegalArgumentException {
+  public PaintView(PaintModel model, MouseAdapter mouse, ActionListener actions)
+    throws IllegalArgumentException {
     super("Paint");
     if (model == null) {
       throw new IllegalArgumentException("Given model is uninitialized.");
     }
     this.model = model;
-    this.toolbar = new Toolbar();
-    this.canvas = new Canvas();
+    this.toolbar = new Toolbar(this.model, actions);
+    this.canvas = new Canvas(this.model, mouse);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     Container frame = getContentPane();
     frame.setLayout(new BorderLayout());

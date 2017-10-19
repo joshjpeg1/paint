@@ -1,5 +1,7 @@
 package model.shapes;
 
+import java.awt.*;
+
 /**
  * Created by josh_jpeg on 10/10/17.
  */
@@ -36,5 +38,10 @@ public class Line extends AShape {
 
   public static AShape getCopy(Line other) {
     return new Line(other.startX, other.startY, other.endX, other.endY);
+  }
+
+  @Override
+  public void paint(Graphics g) {
+    g.drawLine(startX, startY, endX, endY);
   }
 }

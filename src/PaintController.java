@@ -2,40 +2,46 @@ import model.PaintModel;
 import model.shapes.ShapeType;
 import view.PaintView;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 /**
  * Created by josh_jpeg on 10/14/17.
  */
-public class PaintController {
+public class PaintController extends MouseAdapter implements ActionListener {
   private static PaintModel model;
   private static PaintView view;
-  private static PaintController controller;
 
-  /**
-   * Constructor for controller, using the singleton pattern.
-   */
-  private PaintController() {
+  protected PaintController() {
     this.model = PaintModel.initialize();
-    this.view = new PaintView(this.model);
-    this.controller = null;
+    this.view = new PaintView(this.model, this, this);
   }
 
-  /**
-   * initializer for singleton pattern for controller. Only one will ever be created.
-   * @return this's controller
-   */
-  public static PaintController initialize() {
-    if (controller == null) {
-      controller = new PaintController();
+  @Override
+  public void mousePressed(MouseEvent me) {
+    this.model.startDraw(me.getPoint());
+    this.view.repaint();
+  }
+
+  @Override
+  public void mouseDragged(MouseEvent me) {
+    this.model.updateEndPoint(me.getPoint());
+    this.view.repaint();
+  }
+
+  @Override
+  public void mouseReleased(MouseEvent me) {
+    this.model.stopDraw(me.getPoint());
+    this.view.repaint();
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    if (e.getActionCommand().equalsIgnoreCase("CLEAR")) {
+      this.model.clearCanvas();
+      this.view.repaint();
     }
-    return controller;
-  }
-
-  public void start() {
-    this.model.addShape(ShapeType.RECT, 5, 8, 15, 21);
-    this.model.addShape(ShapeType.RECT, 15, 21, 5, 8);
-    this.model.addShape(ShapeType.ELLIPSE, 5, 8, 15, 21);
-    this.model.addShape(ShapeType.LINE, 5, 8, 15, 21);
-    this.model.addShape(ShapeType.CURVE, 5, 8, 15, 21);
-    this.model.printCanvas();
   }
 }

@@ -17,7 +17,7 @@ public class AShapeFactory {
       case LINE:
         return new Line(startX, startY, endX, endY);
       case CURVE:
-        return new Curve(startX, startY, endX, endY, 0);
+        return new Curve(startX, startY, endX, endY);
       default:
         throw new IllegalArgumentException("Invalid ShapeType");
     }
