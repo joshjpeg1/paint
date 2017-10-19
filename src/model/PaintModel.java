@@ -36,8 +36,9 @@ public class PaintModel {
     return model;
   }
 
-  public void addShape(ShapeType type, int startX, int startY, int endX, int endY) {
-    this.shapes.push(this.factory.getShape(type, startX, startY, endX, endY));
+  public void addShape(ShapeType type, LineThickness lineThickness,
+                       int startX, int startY, int endX, int endY) {
+    this.shapes.push(this.factory.getShape(type, lineThickness, startX, startY, endX, endY));
   }
 
   public Stack<AShape> getCanvas() {
@@ -46,8 +47,8 @@ public class PaintModel {
       copy.add(AShape.getCopy(shapes.get(i)));
     }
     if (this.tempStart != null && this.tempEnd != null) {
-      copy.add(this.factory.getShape(this.shapeType, this.tempStart.x, this.tempStart.y,
-        this.tempEnd.x, this.tempEnd.y));
+      copy.add(this.factory.getShape(this.shapeType, this.lineThickness, this.tempStart.x,
+        this.tempStart.y, this.tempEnd.x, this.tempEnd.y));
     }
     return copy;
   }
@@ -56,6 +57,15 @@ public class PaintModel {
     for (int i = 0; i < shapes.size(); i++) {
       System.out.println(shapes.get(i).toString());
     }
+  }
+
+  public void setShapeType(ShapeType shapeType) {
+    this.shapeType = shapeType;
+  }
+
+  public void setLineThickness(LineThickness lineThickness) {
+    this.lineThickness = lineThickness;
+    System.out.println(this.lineThickness);
   }
 
   public void startDraw(Point mouseStart) {
@@ -68,7 +78,8 @@ public class PaintModel {
   }
 
   public void stopDraw(Point mouseEnd) {
-    this.addShape(this.shapeType, this.tempStart.x, this.tempStart.y, mouseEnd.x, mouseEnd.y);
+    this.addShape(this.shapeType, this.lineThickness, this.tempStart.x, this.tempStart.y,
+      mouseEnd.x, mouseEnd.y);
     this.tempStart = null;
     this.tempEnd = null;
   }

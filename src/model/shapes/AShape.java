@@ -7,10 +7,12 @@ import java.awt.*;
  */
 public abstract class AShape {
   protected ShapeType type;
+  protected LineThickness lineThickness;
   protected int startX;
   protected int startY;
 
-  protected AShape(int startX, int startY) {
+  protected AShape(LineThickness lineThickness, int startX, int startY) {
+    this.lineThickness = lineThickness;
     this.startX = startX;
     this.startY = startY;
   }
@@ -25,18 +27,6 @@ public abstract class AShape {
     AShape other = (AShape) o;
     return this.startX == other.startX
       && this.startY == other.startY;
-  }
-
-  public int getStartX() {
-    return this.startX;
-  }
-
-  public int getStartY() {
-    return this.startY;
-  }
-
-  public ShapeType getType() {
-    return this.type;
   }
 
   public static AShape getCopy(AShape other) {
@@ -57,7 +47,7 @@ public abstract class AShape {
     }
   }
 
-  public void paint(Graphics g) {
+  public void paint(Graphics2D g) {
     return;
   }
 }

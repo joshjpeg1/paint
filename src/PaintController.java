@@ -1,7 +1,9 @@
 import model.PaintModel;
+import model.shapes.LineThickness;
 import model.shapes.ShapeType;
 import view.PaintView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -39,9 +41,17 @@ public class PaintController extends MouseAdapter implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
+    System.out.println(e);
     if (e.getActionCommand().equalsIgnoreCase("CLEAR")) {
       this.model.clearCanvas();
       this.view.repaint();
+    } else {
+      JComboBox cb = (JComboBox) e.getSource();
+      if (cb.getName().equalsIgnoreCase("ShapeType")) {
+        this.model.setShapeType((ShapeType) cb.getSelectedItem());
+      } else if (cb.getName().equalsIgnoreCase("LineThickness")) {
+        this.model.setLineThickness((LineThickness) cb.getSelectedItem());
+      }
     }
   }
 }

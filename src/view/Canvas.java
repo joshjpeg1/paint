@@ -27,8 +27,9 @@ public class Canvas extends JPanel {
   }
 
   @Override
-  protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
+  protected void paintComponent(Graphics graphics) {
+    super.paintComponent(graphics);
+    Graphics2D g = (Graphics2D) graphics;
     g.setColor(Color.white);
     g.fillRect(0, 0, this.getWidth(), this.getHeight());
     Stack<AShape> shapes = model.getCanvas();

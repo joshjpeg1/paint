@@ -1,6 +1,7 @@
 package model.shapes;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 
 /**
  * Created by josh_jpeg on 10/10/17.
@@ -9,8 +10,8 @@ public class Line extends AShape {
   protected int endX;
   protected int endY;
 
-  protected Line(int startX, int startY, int endX, int endY) {
-    super(startX, startY);
+  protected Line(LineThickness lineThickness, int startX, int startY, int endX, int endY) {
+    super(lineThickness, startX, startY);
     this.type = ShapeType.LINE;
     this.endX = endX;
     this.endY = endY;
@@ -37,11 +38,13 @@ public class Line extends AShape {
   }
 
   public static AShape getCopy(Line other) {
-    return new Line(other.startX, other.startY, other.endX, other.endY);
+    return new Line(other.lineThickness, other.startX, other.startY, other.endX, other.endY);
   }
 
   @Override
-  public void paint(Graphics g) {
-    g.drawLine(startX, startY, endX, endY);
+  public void paint(Graphics2D g) {
+    g.draw(new BasicStroke(this.lineThickness.getWidth(),
+      BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
+      .createStrokedShape(new Line2D.Float(startX, startY, endX, endY)));
   }
 }
