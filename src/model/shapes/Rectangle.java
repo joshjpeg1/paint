@@ -9,8 +9,8 @@ public class Rectangle extends AShape {
   private int width;
   private int height;
 
-  protected Rectangle(LineThickness lineThickness, int startX, int startY, int endX, int endY) {
-    super(lineThickness, Math.min(startX, endX), Math.min(startY, endY));
+  protected Rectangle(StrokeWidth strokeWidth, int startX, int startY, int endX, int endY) {
+    super(strokeWidth, Math.min(startX, endX), Math.min(startY, endY));
     this.type = ShapeType.RECT;
     this.width = Math.abs(startX - endX);
     this.height = Math.abs(startY - endY);
@@ -37,7 +37,7 @@ public class Rectangle extends AShape {
   }
 
   public static AShape getCopy(Rectangle other) {
-    return new Rectangle(other.lineThickness, other.startX, other.startY,
+    return new Rectangle(other.strokeWidth, other.startX, other.startY,
       other.startX + other.width, other.startY + other.height);
   }
 

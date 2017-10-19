@@ -1,6 +1,6 @@
 package view;
 
-import model.shapes.LineThickness;
+import model.shapes.StrokeWidth;
 import model.shapes.ShapeType;
 
 import javax.swing.*;
@@ -12,14 +12,14 @@ import java.awt.event.ActionListener;
  */
 public class Toolbar extends JPanel {
   private static JComboBox<ShapeType> shapeChooser;
-  private static JComboBox<LineThickness> lineThicknessChooser;
+  private static JComboBox<StrokeWidth> lineThicknessChooser;
   private static JButton clearButton;
 
   public Toolbar(ActionListener controller) {
     this.shapeChooser = new JComboBox<>(ShapeType.values());
     this.shapeChooser.setName("ShapeType");
-    this.lineThicknessChooser = new JComboBox<>(LineThickness.values());
-    this.lineThicknessChooser.setName("LineThickness");
+    this.lineThicknessChooser = new JComboBox<>(StrokeWidth.values());
+    this.lineThicknessChooser.setName("StrokeWidth");
     this.clearButton = new JButton("CLEAR");
     this.clearButton.addActionListener(controller);
     this.shapeChooser.addActionListener(controller);

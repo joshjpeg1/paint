@@ -4,7 +4,7 @@ package model.shapes;
  * Created by josh_jpeg on 10/10/17.
  */
 public class AShapeFactory {
-  public AShape getShape(ShapeType type, LineThickness lineThickness, int startX, int startY,
+  public AShape getShape(ShapeType type, StrokeWidth lineThickness, int startX, int startY,
                          int endX, int endY) throws IllegalArgumentException {
     if (type == null) {
       throw new IllegalArgumentException("Cannot have uninitialized shape type.");

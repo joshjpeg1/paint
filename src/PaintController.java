@@ -1,5 +1,5 @@
 import model.PaintModel;
-import model.shapes.LineThickness;
+import model.shapes.StrokeWidth;
 import model.shapes.ShapeType;
 import view.PaintView;
 
@@ -49,8 +49,8 @@ public class PaintController extends MouseAdapter implements ActionListener {
       JComboBox cb = (JComboBox) e.getSource();
       if (cb.getName().equalsIgnoreCase("ShapeType")) {
         this.model.setShapeType((ShapeType) cb.getSelectedItem());
-      } else if (cb.getName().equalsIgnoreCase("LineThickness")) {
-        this.model.setLineThickness((LineThickness) cb.getSelectedItem());
+      } else if (cb.getName().equalsIgnoreCase("StrokeWidth")) {
+        this.model.setStrokeWidth((StrokeWidth) cb.getSelectedItem());
       }
     }
   }

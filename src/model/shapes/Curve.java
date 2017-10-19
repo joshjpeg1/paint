@@ -11,8 +11,8 @@ public class Curve extends AShape {
   private int height;
   private int degree;
 
-  protected Curve(LineThickness lineThickness, int startX, int startY, int endX, int endY) {
-    super(lineThickness, Math.min(startX, endX), Math.min(startY, endY));
+  protected Curve(StrokeWidth strokeWidth, int startX, int startY, int endX, int endY) {
+    super(strokeWidth, Math.min(startX, endX), Math.min(startY, endY));
     this.type = ShapeType.CURVE;
     this.width = Math.abs(startX - endX);
     this.height = Math.abs(startY - endY);
@@ -41,14 +41,14 @@ public class Curve extends AShape {
   }
 
   public static AShape getCopy(Curve other) {
-    return new Curve(other.lineThickness, other.startX, other.startY, other.startX + other.width,
+    return new Curve(other.strokeWidth, other.startX, other.startY, other.startX + other.width,
       other.startY + other.height);
   }
 
   @Override
   public void paint(Graphics2D g) {
 
-    g.fill(new BasicStroke(this.lineThickness.getWidth())
+    g.fill(new BasicStroke(this.strokeWidth.getWidth())
       .createStrokedShape(new Arc2D.Float(startX, startY, width, height, 20, 20, 0)));
   }
 }

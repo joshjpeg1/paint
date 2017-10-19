@@ -9,8 +9,8 @@ public class Ellipse extends AShape {
   private int width;
   private int height;
 
-  protected Ellipse(LineThickness lineThickness, int startX, int startY, int endX, int endY) {
-    super(lineThickness, Math.min(startX, endX), Math.min(startY, endY));
+  protected Ellipse(StrokeWidth strokeWidth, int startX, int startY, int endX, int endY) {
+    super(strokeWidth, Math.min(startX, endX), Math.min(startY, endY));
     this.type = ShapeType.ELLIPSE;
     this.width = Math.abs(startX - endX);
     this.height = Math.abs(startY - endY);
@@ -37,7 +37,7 @@ public class Ellipse extends AShape {
   }
 
   public static AShape getCopy(Ellipse other) {
-    return new Ellipse(other.lineThickness, other.startX, other.startY,
+    return new Ellipse(other.strokeWidth, other.startX, other.startY,
       other.startX + other.width, other.startY + other.height);
   }
 

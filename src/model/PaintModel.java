@@ -2,7 +2,7 @@ package model;
 
 import model.shapes.AShape;
 import model.shapes.AShapeFactory;
-import model.shapes.LineThickness;
+import model.shapes.StrokeWidth;
 import model.shapes.ShapeType;
 
 import java.awt.*;
@@ -18,7 +18,7 @@ public class PaintModel {
   private Point tempStart = null;
   private Point tempEnd = null;
   private ShapeType shapeType = ShapeType.LINE;
-  private LineThickness lineThickness = LineThickness.ONE;
+  private StrokeWidth strokeWidth = StrokeWidth.ONE;
 
   private PaintModel() {
     this.shapes = new Stack<>();
@@ -36,9 +36,9 @@ public class PaintModel {
     return model;
   }
 
-  public void addShape(ShapeType type, LineThickness lineThickness,
+  public void addShape(ShapeType type, StrokeWidth strokeWidth,
                        int startX, int startY, int endX, int endY) {
-    this.shapes.push(this.factory.getShape(type, lineThickness, startX, startY, endX, endY));
+    this.shapes.push(this.factory.getShape(type, strokeWidth, startX, startY, endX, endY));
   }
 
   public Stack<AShape> getCanvas() {
@@ -47,7 +47,7 @@ public class PaintModel {
       copy.add(AShape.getCopy(shapes.get(i)));
     }
     if (this.tempStart != null && this.tempEnd != null) {
-      copy.add(this.factory.getShape(this.shapeType, this.lineThickness, this.tempStart.x,
+      copy.add(this.factory.getShape(this.shapeType, this.strokeWidth, this.tempStart.x,
         this.tempStart.y, this.tempEnd.x, this.tempEnd.y));
     }
     return copy;
@@ -63,9 +63,9 @@ public class PaintModel {
     this.shapeType = shapeType;
   }
 
-  public void setLineThickness(LineThickness lineThickness) {
-    this.lineThickness = lineThickness;
-    System.out.println(this.lineThickness);
+  public void setStrokeWidth(StrokeWidth strokeWidth) {
+    this.strokeWidth = strokeWidth;
+    System.out.println(this.strokeWidth);
   }
 
   public void startDraw(Point mouseStart) {
@@ -78,7 +78,7 @@ public class PaintModel {
   }
 
   public void stopDraw(Point mouseEnd) {
-    this.addShape(this.shapeType, this.lineThickness, this.tempStart.x, this.tempStart.y,
+    this.addShape(this.shapeType, this.strokeWidth, this.tempStart.x, this.tempStart.y,
       mouseEnd.x, mouseEnd.y);
     this.tempStart = null;
     this.tempEnd = null;

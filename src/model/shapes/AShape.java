@@ -7,12 +7,12 @@ import java.awt.*;
  */
 public abstract class AShape {
   protected ShapeType type;
-  protected LineThickness lineThickness;
+  protected StrokeWidth strokeWidth;
   protected int startX;
   protected int startY;
 
-  protected AShape(LineThickness lineThickness, int startX, int startY) {
-    this.lineThickness = lineThickness;
+  protected AShape(StrokeWidth strokeWidth, int startX, int startY) {
+    this.strokeWidth = strokeWidth;
     this.startX = startX;
     this.startY = startY;
   }
