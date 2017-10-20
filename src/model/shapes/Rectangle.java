@@ -9,8 +9,9 @@ public class Rectangle extends AShape {
   private int width;
   private int height;
 
-  protected Rectangle(StrokeWidth strokeWidth, int startX, int startY, int endX, int endY) {
-    super(strokeWidth, Math.min(startX, endX), Math.min(startY, endY));
+  protected Rectangle(StrokeWidth strokeWidth, ShapeColor shapeColor, int startX, int startY,
+                      int endX, int endY) {
+    super(strokeWidth, shapeColor, Math.min(startX, endX), Math.min(startY, endY));
     this.type = ShapeType.RECT;
     this.width = Math.abs(startX - endX);
     this.height = Math.abs(startY - endY);
@@ -30,19 +31,14 @@ public class Rectangle extends AShape {
       && this.height == other.height;
   }
 
-  @Override
-  public String toString() {
-    return "[RECT, (" + this.startX + ", " + this.startY + "), w: " + this.width + ", h: "
-      + this.height + "]";
-  }
-
   public static AShape getCopy(Rectangle other) {
-    return new Rectangle(other.strokeWidth, other.startX, other.startY,
+    return new Rectangle(other.strokeWidth, other.shapeColor, other.startX, other.startY,
       other.startX + other.width, other.startY + other.height);
   }
 
   @Override
   public void paint(Graphics2D g) {
+    g.setColor(this.shapeColor.getColor());
     g.fillRect(startX, startY, width, height);
   }
 }

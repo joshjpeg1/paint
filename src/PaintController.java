@@ -1,4 +1,5 @@
 import model.PaintModel;
+import model.shapes.ShapeColor;
 import model.shapes.StrokeWidth;
 import model.shapes.ShapeType;
 import view.PaintView;
@@ -41,16 +42,28 @@ public class PaintController extends MouseAdapter implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    System.out.println(e);
-    if (e.getActionCommand().equalsIgnoreCase("CLEAR")) {
+    if (e.getActionCommand().equalsIgnoreCase("UNDO")) {
+      this.model.undo();
+      this.view.repaint();
+    } else if (e.getActionCommand().equalsIgnoreCase("REDO")) {
+      this.model.redo();
+      this.view.repaint();
+    } else if (e.getActionCommand().equalsIgnoreCase("CLEAR")) {
       this.model.clearCanvas();
       this.view.repaint();
-    } else {
+    } else if (e.getActionCommand().equalsIgnoreCase("comboBoxChanged")) {
       JComboBox cb = (JComboBox) e.getSource();
       if (cb.getName().equalsIgnoreCase("ShapeType")) {
         this.model.setShapeType((ShapeType) cb.getSelectedItem());
       } else if (cb.getName().equalsIgnoreCase("StrokeWidth")) {
         this.model.setStrokeWidth((StrokeWidth) cb.getSelectedItem());
+      }
+    } else {
+      for (ShapeColor c : ShapeColor.values()) {
+        if (c.name().equalsIgnoreCase(e.getActionCommand())) {
+          this.model.setShapeColor(c);
+          return;
+        }
       }
     }
   }

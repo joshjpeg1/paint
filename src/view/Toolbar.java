@@ -1,35 +1,63 @@
 package view;
 
+import model.shapes.ShapeColor;
 import model.shapes.StrokeWidth;
 import model.shapes.ShapeType;
 
 import javax.swing.*;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by josh_jpeg on 10/14/17.
  */
 public class Toolbar extends JPanel {
-  private static JComboBox<ShapeType> shapeChooser;
-  private static JComboBox<StrokeWidth> lineThicknessChooser;
-  private static JButton clearButton;
+  private JComboBox<ShapeType> shapeChooser;
+  private JComboBox<StrokeWidth> lineThicknessChooser;
+  private JButton undoButton;
+  private JButton redoButton;
+  private JButton clearButton;
+  private ButtonGroup colors;
 
-  public Toolbar(ActionListener controller) {
-    this.shapeChooser = new JComboBox<>(ShapeType.values());
-    this.shapeChooser.setName("ShapeType");
-    this.lineThicknessChooser = new JComboBox<>(StrokeWidth.values());
-    this.lineThicknessChooser.setName("StrokeWidth");
-    this.clearButton = new JButton("CLEAR");
-    this.clearButton.addActionListener(controller);
-    this.shapeChooser.addActionListener(controller);
-    this.lineThicknessChooser.addActionListener(controller);
-
+  protected Toolbar(ActionListener controller) {
     this.setLayout(new GridLayout(0, 1));
     this.setVisible(true);
-    this.add(this.shapeChooser);
-    this.add(this.lineThicknessChooser);
-    this.add(this.clearButton);
-    //this.add(new JColorChooser());
+
+    shapeChooser = new JComboBox<>(ShapeType.values());
+    shapeChooser.setName("ShapeType");
+    shapeChooser.addActionListener(controller);
+    this.add(shapeChooser);
+
+    lineThicknessChooser = new JComboBox<>(StrokeWidth.values());
+    lineThicknessChooser.setName("StrokeWidth");
+    lineThicknessChooser.addActionListener(controller);
+    this.add(lineThicknessChooser);
+
+    undoButton = new JButton("UNDO");
+    undoButton.addActionListener(controller);
+    this.add(undoButton);
+
+    redoButton = new JButton("REDO");
+    redoButton.addActionListener(controller);
+    this.add(redoButton);
+
+    clearButton = new JButton("CLEAR");
+    clearButton.addActionListener(controller);
+    this.add(clearButton);
+
+    colors = new ButtonGroup();
+    boolean selected = false;
+    for (ShapeColor c : ShapeColor.values()) {
+      AbstractButton colorBtn = new JRadioButton(c.name());
+      if (!selected) {
+        colorBtn.setSelected(true);
+        selected = true;
+      }
+      colorBtn.addActionListener(controller);
+      colors.add(colorBtn);
+      this.add(colorBtn);
+    }
   }
 }

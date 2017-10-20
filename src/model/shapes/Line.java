@@ -10,8 +10,9 @@ public class Line extends AShape {
   protected int endX;
   protected int endY;
 
-  protected Line(StrokeWidth strokeWidth, int startX, int startY, int endX, int endY) {
-    super(strokeWidth, startX, startY);
+  protected Line(StrokeWidth strokeWidth, ShapeColor shapeColor, int startX, int startY,
+                 int endX, int endY) {
+    super(strokeWidth, shapeColor, startX, startY);
     this.type = ShapeType.LINE;
     this.endX = endX;
     this.endY = endY;
@@ -31,18 +32,14 @@ public class Line extends AShape {
       && this.endY == other.endY;
   }
 
-  @Override
-  public String toString() {
-    return "[LINE, (" + this.startX + ", " + this.startY + "), (" + this.endX + ", " + this.endY
-      + ")]";
-  }
-
   public static AShape getCopy(Line other) {
-    return new Line(other.strokeWidth, other.startX, other.startY, other.endX, other.endY);
+    return new Line(other.strokeWidth, other.shapeColor, other.startX, other.startY,
+      other.endX, other.endY);
   }
 
   @Override
   public void paint(Graphics2D g) {
+    g.setColor(this.shapeColor.getColor());
     g.draw(new BasicStroke(this.strokeWidth.getWidth(),
       BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
       .createStrokedShape(new Line2D.Float(startX, startY, endX, endY)));

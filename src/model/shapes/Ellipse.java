@@ -9,8 +9,9 @@ public class Ellipse extends AShape {
   private int width;
   private int height;
 
-  protected Ellipse(StrokeWidth strokeWidth, int startX, int startY, int endX, int endY) {
-    super(strokeWidth, Math.min(startX, endX), Math.min(startY, endY));
+  protected Ellipse(StrokeWidth strokeWidth, ShapeColor shapeColor, int startX, int startY,
+                    int endX, int endY) {
+    super(strokeWidth, shapeColor, Math.min(startX, endX), Math.min(startY, endY));
     this.type = ShapeType.ELLIPSE;
     this.width = Math.abs(startX - endX);
     this.height = Math.abs(startY - endY);
@@ -30,19 +31,14 @@ public class Ellipse extends AShape {
       && this.height == other.height;
   }
 
-  @Override
-  public String toString() {
-    return "[ELLIPSE, (" + this.startX + ", " + this.startY + "), w: " + this.width + ", h: "
-      + this.height + "]";
-  }
-
   public static AShape getCopy(Ellipse other) {
-    return new Ellipse(other.strokeWidth, other.startX, other.startY,
+    return new Ellipse(other.strokeWidth, other.shapeColor, other.startX, other.startY,
       other.startX + other.width, other.startY + other.height);
   }
 
   @Override
   public void paint(Graphics2D g) {
+    g.setColor(this.shapeColor.getColor());
     g.fillOval(startX, startY, width, height);
   }
 }

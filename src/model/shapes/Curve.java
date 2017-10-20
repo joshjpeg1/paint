@@ -9,14 +9,17 @@ import java.awt.geom.Arc2D;
 public class Curve extends AShape {
   private int width;
   private int height;
-  private int degree;
+  private int startAngle;
+  private int arcAngle;
 
-  protected Curve(StrokeWidth strokeWidth, int startX, int startY, int endX, int endY) {
-    super(strokeWidth, Math.min(startX, endX), Math.min(startY, endY));
+  protected Curve(StrokeWidth strokeWidth, ShapeColor shapeColor, int startX, int startY,
+                  int endX, int endY) {
+    super(strokeWidth, shapeColor, Math.min(startX, endX), Math.min(startY, endY));
     this.type = ShapeType.CURVE;
     this.width = Math.abs(startX - endX);
     this.height = Math.abs(startY - endY);
-    this.degree = 0;
+    this.startAngle = ((startX < endX) ? 1 : 0) * 270;
+    this.arcAngle = ((startY < endY) ? -1 : 1) * 90;
   }
 
   @Override
@@ -31,24 +34,19 @@ public class Curve extends AShape {
       && this.startY == other.startY
       && this.width == other.width
       && this.height == other.height
-      && this.degree == other.degree;
-  }
-
-  @Override
-  public String toString() {
-    return "[CURVE, (" + this.startX + ", " + this.startY + "), " + this.width + ", " + this.height
-      + ", d: " + this.degree + "°]";
+      && this.startAngle == other.startAngle
+      && this.arcAngle == other.arcAngle;
   }
 
   public static AShape getCopy(Curve other) {
-    return new Curve(other.strokeWidth, other.startX, other.startY, other.startX + other.width,
-      other.startY + other.height);
+    return new Curve(other.strokeWidth, other.shapeColor, other.startX, other.startY,
+      other.startX + other.width, other.startY + other.height);
   }
 
   @Override
   public void paint(Graphics2D g) {
-
+    g.setColor(this.shapeColor.getColor());
     g.fill(new BasicStroke(this.strokeWidth.getWidth())
-      .createStrokedShape(new Arc2D.Float(startX, startY, width, height, 20, 20, 0)));
+      .createStrokedShape(new Arc2D.Float(startX, startY, width, height, startAngle, arcAngle, 0)));
   }
 }

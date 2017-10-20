@@ -13,9 +13,9 @@ import java.awt.event.MouseAdapter;
 public class PaintView extends JFrame {
   protected static final int WIDTH = 500;
   protected static final int HEIGHT = 500;
-  private static PaintModel model;
-  private static Toolbar toolbar;
-  private static Canvas canvas;
+  private PaintModel model;
+  private Toolbar toolbar;
+  private Canvas canvas;
 
   public PaintView(PaintModel model, ActionListener actions, MouseAdapter mouse)
     throws IllegalArgumentException {

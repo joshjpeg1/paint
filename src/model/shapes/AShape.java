@@ -8,11 +8,13 @@ import java.awt.*;
 public abstract class AShape {
   protected ShapeType type;
   protected StrokeWidth strokeWidth;
+  protected ShapeColor shapeColor;
   protected int startX;
   protected int startY;
 
-  protected AShape(StrokeWidth strokeWidth, int startX, int startY) {
+  protected AShape(StrokeWidth strokeWidth, ShapeColor shapeColor, int startX, int startY) {
     this.strokeWidth = strokeWidth;
+    this.shapeColor = shapeColor;
     this.startX = startX;
     this.startY = startY;
   }

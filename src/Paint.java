@@ -3,6 +3,6 @@
  */
 public class Paint {
   public static void main(String[] args) throws IllegalArgumentException {
-    PaintController pc = new PaintController();
+    new PaintController();
   }
 }
