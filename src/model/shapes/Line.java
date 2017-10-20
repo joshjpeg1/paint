@@ -40,7 +40,7 @@ public class Line extends AShape {
   @Override
   public void paint(Graphics2D g) {
     g.setColor(this.shapeColor.getColor());
-    g.draw(new BasicStroke(this.strokeWidth.getWidth(),
+    g.fill(new BasicStroke(this.strokeWidth.getWidth(),
       BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND)
       .createStrokedShape(new Line2D.Float(startX, startY, endX, endY)));
   }

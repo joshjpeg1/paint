@@ -18,8 +18,9 @@ public class Curve extends AShape {
     this.type = ShapeType.CURVE;
     this.width = Math.abs(startX - endX);
     this.height = Math.abs(startY - endY);
-    this.startAngle = ((startX < endX) ? 1 : 0) * 270;
-    this.arcAngle = ((startY < endY) ? -1 : 1) * 90;
+    this.startAngle = (endX < startX) ? 180 : 90;
+    System.out.println(endY + ", " + startY);
+    this.arcAngle = ((endY < startY) ? -1 : 1) * 90;
   }
 
   @Override
@@ -39,8 +40,11 @@ public class Curve extends AShape {
   }
 
   public static AShape getCopy(Curve other) {
-    return new Curve(other.strokeWidth, other.shapeColor, other.startX, other.startY,
-      other.startX + other.width, other.startY + other.height);
+    return new Curve(other.strokeWidth, other.shapeColor,
+      other.startX + ((other.startAngle > 90) ? other.width : 0),
+      other.startY + ((other.arcAngle < 0) ? other.height : 0),
+      other.startX + ((other.startAngle > 90) ? 0 : other.width),
+      other.startY + ((other.arcAngle < 0) ? 0 : other.height));
   }
 
   @Override
