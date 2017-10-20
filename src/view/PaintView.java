@@ -18,7 +18,7 @@ public class PaintView extends JFrame {
   private Canvas canvas;
 
   public PaintView(PaintModel model, ActionListener actions, MouseAdapter mouse)
-    throws IllegalArgumentException {
+      throws IllegalArgumentException {
     super("Paint");
     if (model == null) {
       throw new IllegalArgumentException("Given model is uninitialized.");

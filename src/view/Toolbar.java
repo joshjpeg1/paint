@@ -5,10 +5,9 @@ import model.shapes.StrokeWidth;
 import model.shapes.ShapeType;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by josh_jpeg on 10/14/17.
@@ -20,32 +19,55 @@ public class Toolbar extends JPanel {
   private JButton redoButton;
   private JButton clearButton;
   private ButtonGroup colors;
+  private final int ICON_TEXT_GAP = 10;
 
   protected Toolbar(ActionListener controller) {
-    this.setLayout(new GridLayout(0, 1));
+    this.setLayout(new BorderLayout());
     this.setVisible(true);
+
+    this.addActionsPanel(controller);
+    this.addDrawingPanel(controller);
+    this.add(new JPanel(), BorderLayout.CENTER);
+  }
+
+  private void addActionsPanel(ActionListener controller) {
+    JPanel actions = new JPanel(new GridLayout(0, 1));
+    actions.setBorder(new TitledBorder("Actions"));
+    this.add(actions, BorderLayout.SOUTH);
+
+    clearButton = new JButton("CLEAR");
+    clearButton.setIcon(new ImageIcon("img/clear.png"));
+    clearButton.setIconTextGap(ICON_TEXT_GAP);
+    clearButton.addActionListener(controller);
+    actions.add(clearButton);
+
+    undoButton = new JButton("UNDO");
+    undoButton.setIcon(new ImageIcon("img/undo.png"));
+    undoButton.setIconTextGap(ICON_TEXT_GAP);
+    undoButton.addActionListener(controller);
+    actions.add(undoButton);
+
+    redoButton = new JButton("REDO");
+    redoButton.setIcon(new ImageIcon("img/redo.png"));
+    redoButton.setIconTextGap(ICON_TEXT_GAP);
+    redoButton.addActionListener(controller);
+    actions.add(redoButton);
+  }
+
+  private void addDrawingPanel(ActionListener controller) {
+    JPanel drawing = new JPanel(new GridLayout(0, 1));
+    drawing.setBorder(new TitledBorder("Drawing"));
+    this.add(drawing, BorderLayout.NORTH);
 
     shapeChooser = new JComboBox<>(ShapeType.values());
     shapeChooser.setName("ShapeType");
     shapeChooser.addActionListener(controller);
-    this.add(shapeChooser);
+    drawing.add(shapeChooser);
 
     lineThicknessChooser = new JComboBox<>(StrokeWidth.values());
     lineThicknessChooser.setName("StrokeWidth");
     lineThicknessChooser.addActionListener(controller);
-    this.add(lineThicknessChooser);
-
-    undoButton = new JButton("UNDO");
-    undoButton.addActionListener(controller);
-    this.add(undoButton);
-
-    redoButton = new JButton("REDO");
-    redoButton.addActionListener(controller);
-    this.add(redoButton);
-
-    clearButton = new JButton("CLEAR");
-    clearButton.addActionListener(controller);
-    this.add(clearButton);
+    drawing.add(lineThicknessChooser);
 
     colors = new ButtonGroup();
     boolean selected = false;
@@ -57,7 +79,7 @@ public class Toolbar extends JPanel {
       }
       colorBtn.addActionListener(controller);
       colors.add(colorBtn);
-      this.add(colorBtn);
+      drawing.add(colorBtn);
     }
   }
 }

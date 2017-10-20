@@ -16,17 +16,23 @@ public class PaintModel {
   private Stack<AShape> removedShapes;
   private AShapeFactory factory;
 
-  private Point tempStart = null;
-  private Point tempEnd = null;
-  private ShapeType shapeType = ShapeType.LINE;
-  private StrokeWidth strokeWidth = StrokeWidth.ONE;
-  private ShapeColor shapeColor = ShapeColor.RED;
+  private Point tempStart;
+  private Point tempEnd;
+  private ShapeType shapeType;
+  private StrokeWidth strokeWidth;
+  private ShapeColor shapeColor;
 
   private PaintModel() {
     this.lastAction = null;
     this.shapes = new Stack<>();
     this.removedShapes = new Stack<>();
     this.factory = new AShapeFactory();
+
+    this.tempStart = null;
+    this.tempEnd = null;
+    this.shapeType = ShapeType.LINE;
+    this.strokeWidth = StrokeWidth.ONE;
+    this.shapeColor = ShapeColor.RED;
   }
 
   /**
@@ -38,24 +44,6 @@ public class PaintModel {
       model = new PaintModel();
     }
     return model;
-  }
-
-  public void addShape(ShapeType type, StrokeWidth strokeWidth, ShapeColor shapeColor,
-                       int startX, int startY, int endX, int endY) {
-    this.shapes.push(this.factory.getShape(type, strokeWidth, shapeColor, startX, startY,
-      endX, endY));
-  }
-
-  public Stack<AShape> getCanvas() {
-    Stack<AShape> copy = new Stack<>();
-    for (int i = 0; i < shapes.size(); i++) {
-      copy.add(AShape.getCopy(shapes.get(i)));
-    }
-    if (this.tempStart != null && this.tempEnd != null) {
-      copy.add(this.factory.getShape(this.shapeType, this.strokeWidth, this.shapeColor,
-        this.tempStart.x, this.tempStart.y, this.tempEnd.x, this.tempEnd.y));
-    }
-    return copy;
   }
 
   public void setShapeType(ShapeType shapeType) {
@@ -92,6 +80,24 @@ public class PaintModel {
     this.lastAction = ModelAction.DRAW;
   }
 
+  private void addShape(ShapeType type, StrokeWidth strokeWidth, ShapeColor shapeColor,
+                        int startX, int startY, int endX, int endY) {
+    this.shapes.push(this.factory.getShape(type, strokeWidth, shapeColor, startX, startY,
+      endX, endY));
+  }
+
+  public Stack<AShape> getCanvas() {
+    Stack<AShape> copy = new Stack<>();
+    for (int i = 0; i < shapes.size(); i++) {
+      copy.add(AShape.getCopy(shapes.get(i)));
+    }
+    if (this.tempStart != null && this.tempEnd != null) {
+      copy.add(this.factory.getShape(this.shapeType, this.strokeWidth, this.shapeColor,
+        this.tempStart.x, this.tempStart.y, this.tempEnd.x, this.tempEnd.y));
+    }
+    return copy;
+  }
+
   public void clearCanvas() {
     this.removedShapes.clear();
     for (int i = 0; i < this.shapes.size(); i++) {
@@ -104,7 +110,8 @@ public class PaintModel {
   public void undo() {
     if (this.shapes.size() > 0) {
       this.removedShapes.push(this.shapes.pop());
-    } else if (this.shapes.size() == 0 && this.removedShapes.size() > 0) {
+      this.lastAction = ModelAction.DRAW;
+    } else if (this.removedShapes.size() > 0) {
       for (int i = 0; i < this.removedShapes.size(); i++) {
         this.shapes.push(this.removedShapes.get(i));
       }
